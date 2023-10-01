@@ -70,29 +70,31 @@ class MatrixOperations {
 ///check if all elements of all rows are equal
 // this is condition for stability matrix
 
-    public int check(float[][] Matrix){
-     int rows = Matrix.length;
-     int cols = Matrix[0].length;
-     int count =0;
-      for (int i = 0; i < rows; i++) {
+   public int check(float[][] Matrix) {
+    int rows = Matrix.length;
+    int cols = Matrix[0].length;
+    int count = 0;
+
+    for (int i = 0; i < rows; i++) {
         float rowElement = Matrix[i][0]; // Get the first element of the row
+        count = 0;
 
         for (int j = 1; j < cols; j++) {
             if (Matrix[i][j] != rowElement) {
-                count=0;
-            }else {
-                count++;
+                count = 1; // Set count to 1 if any element is not equal
+                break;
             }
+        }
+        if (count == 1) {
+            break; // Break out of the loop if any row has unequal elements
         }
     }
 
-    if (count!=0){
-    return 1;
-    }
-    else
-     return 0;
-
+    return count;
 }
+
+
+ 
 
 //used to calculate total of input taken from matrix B
 
@@ -111,7 +113,7 @@ public float calcTotal (float Matrix[][]){
 
 // convert output probablity into solid values
 
-public float[][] output (float Matrix[][], float total){
+/*public float[][] output (float Matrix[][], float total){
        int rows = Matrix.length;
        int cols = Matrix[0].length;
 
@@ -123,20 +125,21 @@ public float[][] output (float Matrix[][], float total){
 
     return Matrix;
 
+}*/
+
+
+ public void displayMatrix(float[][] Matrix, float total) {
+    int rows = Matrix.length;
+    int cols = Matrix[0].length;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            System.out.print(Matrix[i][j] * total + " ");
+        }
+        System.out.println(' ');
+    }
 }
 
-
-    public void displayMatrix(float[][] Matrix) {
-        int rows = Matrix.length;
-        int cols = Matrix[0].length;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.print(Matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     public  float[][] powerMat(float[][] Matrix, int n) {
         //int rows = Matrix.length;
@@ -219,11 +222,11 @@ public class mpr2 {
                 
                 float tot = ob1.calcTotal(MatB);
 
-                float [][] outputMat= ob1.output(Resultmat, tot);
+               // float [][] outputMat= ob1.output(Resultmat, tot);
 
                 System.out.println("Values after n: ");
 
-                ob1.displayMatrix(outputMat);
+                ob1.displayMatrix(Resultmat,tot);
 
                 boolean valid = MatrixOperations.isColumnSum(Resultmat);
                 if (valid){
